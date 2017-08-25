@@ -69,4 +69,9 @@ class Image extends \yii\db\ActiveRecord
             }
         }
     }
+
+    public function afterDelete()
+    {
+        unlink(Yii::$app->basePath . '/web'. $this->url);
+    }
 }

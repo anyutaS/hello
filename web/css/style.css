@@ -13,8 +13,17 @@
     /*margin-bottom: 15px;*/
 /*}*/
 img{
-    margin: 18px 0px 4px 28px
+    margin: 18px 0px 4px 24px
 }
 p #img_name{
     margin-left: 10px;
+}
+h4 {
+    margin-left: 1px;
+}
+#img1{
+    margin: 18px 0px 4px 4px
+}
+.com{
+    margin-bottom: 15px;
 }

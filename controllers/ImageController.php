@@ -107,7 +107,7 @@ class ImageController extends Controller
             $comment->name = Yii::$app->user->identity->username;
             $comment->text = $msg;
             if ($comment->save()) {
-                $msg_com = '<div class="col-lg-12">' . '<div class="panel panel-default">' . '<div class="panel-body">' . '<p>' . '<h4>' . 'Имя:' . ' ' . Html::encode($comment->name) . '</h4>' . '</p>' . '<p>' . '<h4>' . 'Комментарий:' . ' ' . Html::encode($comment->text) . '</h4>' . '</p>' . 'Дата создания:' . ' ' . Html::encode($comment->data) . "<br/>" . '</div>' . '</div>' . '</div>';
+                $msg_com = '<div class="col-lg-12">' . '<div class="panel panel-default">' . '<div class="panel-body">' . '<p>' . '<h4>' . 'Имя:' . ' ' . Html::encode($comment->name) . '</h4>' . '</p>' . '<p>' . '<h4>' . 'Комментарий:' . ' ' . Html::encode($comment->text) . '</h4>' . '</p>'.  '<p>' .'<h5>'. 'Дата создания:' . ' ' .  Yii::$app->formatter->asDate($comment->data,'php:d-m-Y'). '</h5>'. '</p>' . '</div>' . '</div>' . '</div>';
                 return $msg_com;
             }
         }
@@ -165,6 +165,7 @@ class ImageController extends Controller
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $model->file = '';
+                unlink(Yii::$app->basePath . '/web'. $model->url);
                 $model->file = UploadedFile::getInstance($model, 'file');
                 if ($model->upload()) {
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -192,14 +193,17 @@ class ImageController extends Controller
 //        print_r($this->findModel($id)->userId);
 //        exit();
         if ($usID->id == $userID) {
+//            $image_id=Image::findOne($id);
 
             $this->findModel($id)->delete();
             Comments::deleteAll(['idimage' => $id]);
-        } else {
 
+
+//            print_r($image_id);exit();
+//            unlink('/web/photo/'.$image_id);
+        } else {
             return $this->redirect(['site/error']);
         }
-
         return $this->redirect(['index']);
     }
 

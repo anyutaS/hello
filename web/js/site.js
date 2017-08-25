@@ -12,8 +12,8 @@ $(document).ready(function () {
                 success: function (data) {
                     $('#comments').prepend(data);
                     $('#new_comment_msg').val('');
-                    var scrollTop = $('#scroll_to_id').offset().top;
-                    $(document).scrollTop(scrollTop);
+                    // var scrollTop = $('#scroll_to_id').offset().top;
+                    // $(document).scrollTop(scrollTop);
                     $('#myModal').modal('hide')
                 }
             });
