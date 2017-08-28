@@ -16,12 +16,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'file')->widget(FileInput::classname(), [
     'options' => ['accept' => 'image/*'],
     ]);?>
-<!--  --><?//= $form->field($model,'file')->fileInput()->label('Фото');?>
-    
     <?= $form->field($model, 'img_name')->textInput(['maxlength' => true])->label('Название') ?>
-
+    
     <?= $form->field($model, 'description')->textarea(['rows' => 6])->label('Описание') ?>
-
+    
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

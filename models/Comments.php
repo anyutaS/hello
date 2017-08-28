@@ -16,7 +16,6 @@ use Yii;
  */
 class Comments extends \yii\db\ActiveRecord
 {
-
     /**
      * @inheritdoc
      */

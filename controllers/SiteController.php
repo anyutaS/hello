@@ -78,18 +78,6 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-//        if (!Yii::$app->user->isGuest) {
-//            return $this->goHome();
-//        }
-//
-//        $model = new LoginForm();
-//        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-//            return $this->goBack();
-//        }
-//        return $this->render('login', [
-//            'model' => $model,
-//        ]);
-
         if (!Yii::$app->user->isGuest):
             return $this->goHome();
         endif;
@@ -181,9 +169,6 @@ class SiteController extends Controller
 
     public function actionUpload()
     {
-//        print_r($_FILES);
-//        exit();
-
         $form = new Image();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $form->file = UploadedFile::getInstance($form, 'file');
@@ -201,8 +186,6 @@ class SiteController extends Controller
     public function actionPost()
     {
         $image = Image::find()->all();
-//                    print_r($image);
-//        exit();
         if (!empty($image)) {
             $dataProvider = new ActiveDataProvider([
                     'query' => Image::find(),

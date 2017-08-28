@@ -36,7 +36,6 @@ class Image extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['userId'], 'integer'],
             [['description'], 'required'],
-//            [['file'], 'required'],
 
         ];
     }

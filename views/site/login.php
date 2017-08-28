@@ -28,8 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php else: ?>
         <?= $form->field($model, 'username') ?>
     <?php endif; ?>
-    <!--    --><? //= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-    <!--    --><? //= $form->field($model, 'email')->textInput() ?>
     <?= $form->field($model, 'password')->passwordInput() ?>
 
     <?= $form->field($model, 'rememberMe')->checkbox([

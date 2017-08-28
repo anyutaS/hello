@@ -5,16 +5,12 @@ namespace app\controllers;
 use app\models\Comments;
 use Yii;
 use app\models\Image;
-use app\models\ImageSearch;
 use yii\data\Pagination;
-use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\web\Controller;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-use yii\data\ActiveDataProvider;
 
 /**
  * ImageController implements the CRUD actions for Image model.
@@ -27,17 +23,6 @@ class ImageController extends Controller
     public function behaviors()
     {
         return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'only' => ['view'],
-//                'rules' => [
-//                    [
-//                        'actions' => ['view'],
-//                        'allow' => true,
-//                        'roles' => ['@'],
-//                    ],
-//                ],
-//            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -90,7 +75,6 @@ class ImageController extends Controller
         return $this->render('view', [
                 'model' => $this->findModel($id),
                 'query' => $query,
-//                'comForm' => $comForm,
                 'models' => $models,
                 'pagination' => $pagination
             ]
@@ -107,7 +91,7 @@ class ImageController extends Controller
             $comment->name = Yii::$app->user->identity->username;
             $comment->text = $msg;
             if ($comment->save()) {
-                $msg_com = '<div class="col-lg-12">' . '<div class="panel panel-default">' . '<div class="panel-body">' . '<p>' . '<h4>' . 'Имя:' . ' ' . Html::encode($comment->name) . '</h4>' . '</p>' . '<p>' . '<h4>' . 'Комментарий:' . ' ' . Html::encode($comment->text) . '</h4>' . '</p>'.  '<p>' .'<h5>'. 'Дата создания:' . ' ' .  Yii::$app->formatter->asDate($comment->data,'php:d-m-Y'). '</h5>'. '</p>' . '</div>' . '</div>' . '</div>';
+                $msg_com = '<div class="col-lg-12">' . '<div class="panel panel-default">' . '<div class="panel-body">' . '<p>' . '<h4>' . 'Имя:' . ' ' . Html::encode($comment->name) . '</h4>' . '</p>' . '<p>' . '<h4>' . 'Комментарий:' . ' ' . Html::encode($comment->text) . '</h4>' . '</p>' . '<p>' . '<h5>' . 'Дата создания:' . ' ' . Yii::$app->formatter->asDate($comment->data, 'php:d-m-Y') . '</h5>' . '</p>' . '</div>' . '</div>' . '</div>';
                 return $msg_com;
             }
         }
@@ -122,8 +106,6 @@ class ImageController extends Controller
     {
         $model = new Image();
         if ($model->load(Yii::$app->request->post())) {
-//            print_r(Yii::$app->request->post());
-//        exit();
             if (Yii::$app->user->identity) {
                 $userId = Yii::$app->user->identity;
                 $model->userId = $userId->id;
@@ -134,8 +116,6 @@ class ImageController extends Controller
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-////            return false;
-//                echo 'загрузите фото';
                 \Yii::$app->session->addFlash('info', 'Загрузите фото');
                 return $this->redirect(['create', 'model' => $model,]);
             }
@@ -157,15 +137,13 @@ class ImageController extends Controller
     {
         $usID = Yii::$app->user->identity;
         $userID = $this->findModel($id)->userId;
-
-//        print_r(Yii::$app->user->identity->id);
-//        exit();
+        
         if ($usID->id == $userID) {
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $model->file = '';
-                unlink(Yii::$app->basePath . '/web'. $model->url);
+                unlink(Yii::$app->basePath . '/web' . $model->url);
                 $model->file = UploadedFile::getInstance($model, 'file');
                 if ($model->upload()) {
                     return $this->redirect(['view', 'id' => $model->id]);

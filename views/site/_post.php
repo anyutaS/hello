@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\HtmlPurifier;
 use yii\helpers\Url;
 /* @var $model app\models\Image */
 ?>
